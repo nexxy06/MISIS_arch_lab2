@@ -24,6 +24,26 @@ services:
       - "6379:6379"
     restart: unless-stopped
 
+  user-service:
+    build:
+      context: ../
+      dockerfile: Dockerfile
+    container_name: user-service
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/apidemo-db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_DATA_REDIS_HOST: keydb
+      SPRING_DATA_REDIS_PORT: 6379
+    depends_on:
+      - postgres
+      - keydb
+    restart: on-failure
+
 volumes:
   data:
+    driver: local
+  maven_cache:
     driver: local
