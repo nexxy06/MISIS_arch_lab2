@@ -8,7 +8,6 @@ COPY . .
 
 RUN mvn clean package -pl user-service -am -DskipTests
 
-# ---- Runtime image ----
 FROM eclipse-temurin:17-jre
 
 WORKDIR /app
